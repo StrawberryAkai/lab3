@@ -11,14 +11,35 @@ public class MarkdownParse {
         ArrayList<String> toReturn = new ArrayList<>();        
         int currentIndex = 0;
         while(currentIndex < markdown.length() && markdown.length() > 0) {
-            int openBracket = markdown.indexOf("[", currentIndex);
-            int closeBracket = markdown.indexOf("]", openBracket);
-            int openParen = markdown.indexOf("(", closeBracket);
-            int closeParen = markdown.indexOf(")", openParen);
-            if(openParen > 0 || closeParen > 0){
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
-            } 
-            currentIndex = closeParen + 1;
+            if(markdown.contains("[")){
+                int openBracket = markdown.indexOf("[", currentIndex);
+                if(markdown.contains("]")){
+                    int closeBracket = markdown.indexOf("]", openBracket);
+                    if(markdown.contains("(")){
+                        int openParen = markdown.indexOf("(", closeBracket);
+                        if(markdown.contains(")")){
+                            int closeParen = markdown.indexOf(")", openParen);
+                            if(openParen != -1 && closeParen != -1){
+                                toReturn.add(markdown.substring(openParen + 1, closeParen));
+                                currentIndex = closeParen + 1;
+                                if(currentIndex == markdown.length() - 1){
+                                    break;
+                                }
+                            }else{
+                                break;
+                            }
+                        }else{
+                            break;
+                        }
+                    }else{
+                        break;
+                    }
+                }else{
+                    break;
+                }
+            }else{
+                break;
+            }
         }
 
         return toReturn;
