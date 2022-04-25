@@ -19,6 +19,10 @@ public class MarkdownParse {
             }
         }
         br.close();
+        Matcher m = Pattern.compile("\\((.*?)\\)").matcher(text);
+        while(m.find()){
+            toReturn.add(m.group(1));
+        }
 
         return toReturn;
     }
