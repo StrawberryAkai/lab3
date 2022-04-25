@@ -4,34 +4,16 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class MarkdownParse {
-
-        BufferedReader br = new BufferedReader(new FileReader(markdown));
-        List<String> storetext = new ArrayList<>();
-        ArrayList<String> toReturn = new ArrayList<>();
-        String text = "";
-        String line;      
-        while((line = br.readLine())!= null){
-            if(!line.isEmpty()){
-                text += line;
-                if(line != null){
-                    text += "\n";
-                }
-            }
-        }
-        br.close();
-        storetext.add(text);
-        for(String x : storetext){
-            if(x.contains("[")) {
-        		if(x.contains("]")) {
-        			if(x.contains("(")) {
-        				if(x.contains(")")) {
-        					int openParen = x.indexOf("(");
-        					int closeParen = x.indexOf(")");
-        					toReturn.add(x.substring(openParen + 1, closeParen));
-        				}
-        			}continue;
-        		}continue;
-        	}continue;
+    public static ArrayList<String> getLinks(String markdown) {
+        ArrayList<String> toReturn = new ArrayList<>();        
+        int currentIndex = 0;
+        while(currentIndex < markdown.length()) {
+            int openBracket = markdown.indexOf("[", currentIndex);
+            int closeBracket = markdown.indexOf("]", openBracket);
+            int openParen = markdown.indexOf("(", closeBracket);
+            int closeParen = markdown.indexOf(")", openParen);
+            toReturn.add(markdown.substring(openParen + 1, closeParen));
+            currentIndex = closeParen + 1;
         }
 
         return toReturn;
@@ -39,6 +21,10 @@ public class MarkdownParse {
 
 
     public static void main(String[] args) throws IOException {
-	    System.out.println(getLinks("test-file.md"));
+        Path fileName = Path.of(args[0]);
+        String content = Files.readString(fileName);
+        ArrayList<String> links = getLinks(content);
+	    System.out.println(links);
     }
 }
+
