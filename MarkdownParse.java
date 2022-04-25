@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class MarkdownParse {
 
-    public static ArrayList<String> getLinks(String markdown) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(markdown));
+        List<String> storetext = new ArrayList<>();
         ArrayList<String> toReturn = new ArrayList<>();
         String text = "";
         String line;      
@@ -19,7 +19,20 @@ public class MarkdownParse {
             }
         }
         br.close();
-        toReturn.add(text);
+        storetext.add(text);
+        for(String x : storetext){
+            if(x.contains("[")) {
+        		if(x.contains("]")) {
+        			if(x.contains("(")) {
+        				if(x.contains(")")) {
+        					int openParen = x.indexOf("(");
+        					int closeParen = x.indexOf(")");
+        					toReturn.add(x.substring(openParen + 1, closeParen));
+        				}
+        			}continue;
+        		}continue;
+        	}continue;
+        }
 
         return toReturn;
     }
