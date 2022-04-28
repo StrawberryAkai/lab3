@@ -36,4 +36,4 @@ public class MarkdownParse {
     public static void main(String[] args) throws IOException {
 	    System.out.println(getLinks("test-file.md"));
     }
-
+}
