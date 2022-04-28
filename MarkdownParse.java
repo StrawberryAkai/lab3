@@ -7,7 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MarkdownParse {
-    public static ArrayList<String> getLinks(String markdown) {
+
+    public static ArrayList<String> getLinks(String markdown) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(markdown));
 
         ArrayList<String> toReturn = new ArrayList<>();
@@ -23,6 +24,7 @@ public class MarkdownParse {
         }
         br.close();
         Matcher m = Pattern.compile("\\((.*?)\\)").matcher(text);
+
         while(m.find()){
             toReturn.add(m.group(1));
         }
@@ -34,5 +36,4 @@ public class MarkdownParse {
     public static void main(String[] args) throws IOException {
 	    System.out.println(getLinks("test-file.md"));
     }
-}
 
