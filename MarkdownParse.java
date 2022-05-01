@@ -28,6 +28,7 @@ public class MarkdownParse {
         while(m.find()){
             toReturn.add(m.group(1));
         }
+        System.out.println("Hello");
 
         return toReturn;
     }
