@@ -23,13 +23,12 @@ public class MarkdownParse {
             }
         }
         br.close();
-        Matcher m = Pattern.compile("\\((.*?)\\)").matcher(text);
-
-        while(m.find()){
+        Matcher m = Pattern.compile("\\((?<link>[^\\)]*)\\)").matcher(text);
+        Matcher b = Pattern.compile("\\[(?<text>[^\\]]*)\\]").matcher(text);
+        Matcher e = Pattern.compile("[...]").matcher(text);
+        while(m.find() && b.find() && e.find()){
             toReturn.add(m.group(1));
         }
-        System.out.println("Hello");
-        System.out.println("you are stupid");
 
         return toReturn;
     }
